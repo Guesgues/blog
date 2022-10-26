@@ -1,0 +1,34 @@
+
+<ul>
+<li><%= link_to "<< Back", articles_path %></li>
+  <li><%= link_to "Edit", edit_article_path(@article) %></li>
+  <li><%= button_to "Destroy", @article,
+                  method: :delete,
+                  data: { confirm: "Are you sure?" } %></li>
+</ul>
+<h1><%= @article.title %></h1>
+<h2><%= @article.body %></h2>
+
+<h2>Comments</h2>
+<% @article.comments.each do |comment| %>
+  <p>
+    <strong>Commenter:</strong>
+    <%= comment.commenter %>
+  </p>
+
+  <p>
+    <strong>Comment:</strong>
+    <%= comment.body %>
+  </p>
+<% end %>
+
+<h2>Edit a comment</h2>
+<%= render "comment", comment: [ @article, comment ] %>
+
+<h2>Add a comment</h2>
+<%= render "comment", comment: [ @article, @article.comments.build ] %>
+
+
+
+
+
