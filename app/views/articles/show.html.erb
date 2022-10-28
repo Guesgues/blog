@@ -1,10 +1,13 @@
 
 <ul>
 <li><%= link_to "<< Back", articles_path %></li>
-  <li><%= link_to "Edit", edit_article_path(@article) %></li>
-  <li><%= button_to "Destroy", @article,
+<% if current_user == @article.user %>
+      <li><%= link_to "Edit", edit_article_path(@article) %></li>
+      <li><%= button_to "Delete", @article,
                   method: :delete,
                   data: { confirm: "Are you sure?" } %></li>
+<% end %>
+  
 </ul>
 <h1><%= @article.title %></h1>
 <h2><%= @article.body %></h2>
@@ -20,13 +23,17 @@
     <strong>Comment:</strong>
     <%= comment.body %>
   </p>
+  <% if current_user == comment.user %>
+      <%= link_to "Edit", edit_article_comment_path(@article,comment) %>
+      <%= button_to "Delete", article_comment_path(@article,comment),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" } %>
+<% end %>
+  <hr>
 <% end %>
 
-<h2>Edit a comment</h2>
-<%= render "comment", comment: [ @article, comment ] %>
-
 <h2>Add a comment</h2>
-<%= render "comment", comment: [ @article, @article.comments.build ] %>
+<%= render "comment_form", comment: [ @article, @article.comments.build ] %>
 
 
 
